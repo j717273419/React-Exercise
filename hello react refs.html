@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.development.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.development.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.9.6/babel.min.js"></script>
+</head>
+<body>
+<h3>react 获取元素的值</h3>
+<div id="example"></div>
+<script type="text/babel">
+
+class Toggle extends React.Component{
+    constructor(props){
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClick2= this.handleClick2.bind(this);
+        this.show = this.show.bind(this);
+        this.show2 = this.show2.bind(this);
+    }
+
+    handleClick(){
+        const inputInfo = this.refs.info;
+        alert(inputInfo.value);
+    }
+
+    
+    handleClick2(){
+        alert(this.inputInfo2.value);
+    }
+
+    show(ev,msg){
+        alert(msg+':'+ev.target.value);
+    }
+
+    show2(ev,msg){
+        alert(msg+':'+this.inputInfo2.value);
+    }
+
+    render(){
+        return (
+            <div>
+                <input ref="info"/>
+                <br/>
+                <input ref={inputInfo2 => this.inputInfo2 = inputInfo2 } />
+                <br/>
+                <button onClick={this.handleClick}>
+                获取第1个输入的内容
+                </button>
+                <hr/>
+                <button onClick={this.handleClick2}>
+                获取第2个输入的内容
+                </button>
+                <hr/>
+                <button onBlur={(ev) => this.show2(ev,'第2个输入框的值为')}>showmsg</button>
+                <input type="text" onBlur={(ev) => this.show(ev,'第3个输入框的值为')} />
+            </div>                
+        );
+    }
+    
+}
+
+ReactDOM.render(
+    <Toggle />,
+    document.getElementById('example')
+);
+</script>
+
+</body>
+</html>

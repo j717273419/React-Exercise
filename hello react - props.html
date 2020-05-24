@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+
+<div id="example"></div>
+<hr>
+<div id="new-clock"></div>
+<script type="text/babel">
+
+function Clock(props){
+    return (
+        <div>
+            <h1>Hello，React</h1>
+            <h2>It is {props.date.toLocaleTimeString()} now.</h2>
+        </div>
+    );
+}
+
+function tick(){
+    const element = <Clock date={new Date()} />;
+    ReactDOM.render(
+        element,
+        document.getElementById('example')
+    );
+}
+
+setInterval(tick,1000);
+
+
+class HelloClock extends React.Component{
+    render(){
+        return (
+            <div>
+                <h1>Hello New Clock</h1>
+                <h3>It is {this.props.date.toLocaleTimeString()}</h3>
+            </div>
+        );
+    }
+}
+
+function tick2(){
+    const newElement = <HelloClock date={new Date()}/>
+    ReactDOM.render(
+        newElement,
+        document.getElementById("new-clock")
+    );
+}
+
+setInterval(tick2,1000)
+</script>
+
+</body>
+</html>

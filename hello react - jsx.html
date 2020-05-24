@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+
+<div id="example"></div>
+<hr>
+<div id="test"></div>
+<hr>
+<div id="test-com"></div>
+<script type="text/babel">
+class HelloMessage extends React.Component {
+  render() {
+    return (
+      <div>
+        Hello {this.props.name}
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <HelloMessage name="Taylor" />,
+  document.getElementById('example')
+);
+
+class ShoppingList extends React.Component {
+  render() {
+    return (
+      <div className="shopping-list">
+        <h1>Shopping List for {this.props.age}</h1>
+        <ul>
+          <li>Instagram</li>
+          <li>WhatsApp</li>
+          <li>Oculus</li>
+        </ul>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <ShoppingList age="999" />,
+  document.getElementById('test')
+);
+
+function Com(props){
+    return <h1>你好,{props.userName}</h1>;
+}
+const ele = <Com userName='张三' />;
+ReactDOM.render(
+  ele,
+  document.getElementById("test-com")
+);
+</script>
+
+</body>
+</html>

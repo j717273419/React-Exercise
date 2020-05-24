@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.9.6/babel.min.js"></script>
+</head>
+
+<body>
+    <h3>react 父组件和子组件 传值</h3>
+    <div id="example"></div>
+    <script type="text/babel">
+
+        class Lists extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+
+            render() {
+                const numbers = [1, 2, 3, 4, 5];
+                const listItems = numbers.map((number) =>
+                    <li>{number}</li>
+                );
+                return (
+                    <div>
+                        <ul>
+                            {listItems}
+                        </ul>
+                    </div>
+                );
+            }
+
+        }
+
+
+        class ListsKey extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+
+            render() {
+                const numbers = [11, 22, 33, 44, 55];
+                const listItems = numbers.map((number, index) =>
+                    <li key={index}>{number}</li>
+                );
+                return (
+                    <div>
+                        <ul>
+                            {listItems}
+                        </ul>
+                    </div>
+                );
+            }
+
+        }
+
+        const numbers3 = [111, 222, 333, 444, 555];
+        ReactDOM.render(
+            <div>
+                <Lists />
+                <ListsKey />
+                <hr />
+                <ListsProps numbers={numbers3} />
+            </div>,
+            document.getElementById('example')
+        );
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.development.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.development.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.9.6/babel.min.js"></script>
+</head>
+<body>
+<h3>react TODO list demo</h3>
+<div id="example"></div>
+<script type="text/babel">
+
+class Toggle extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {isToggleOn: true};
+        this.handleClick = this.handleClick.bind(this);
+        this.show = this.show.bind(this);
+    }
+
+    handleClick(){
+        this.setState(preState => ({
+            isToggleOn: !preState.isToggleOn
+        }))
+    }
+
+    show(ev,msg){
+        alert(msg);
+    }
+
+    render(){
+        return (
+            <div>
+                <button onClick={this.handleClick}>
+                    {this.state.isToggleOn ? 'ON' : 'OFF'}
+                </button>
+                <hr/>
+                <button onClick={(ev) => this.show(ev,'victory')}>showmsg</button>
+            </div>                
+        );
+    }
+    
+}
+
+ReactDOM.render(
+    <Toggle />,
+    document.getElementById('example')
+);
+</script>
+
+</body>
+</html>

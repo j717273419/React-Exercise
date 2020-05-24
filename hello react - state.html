@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello React!</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="new-clock"></div>
+<script type="text/babel">
+
+function Clock(props){
+    return (
+        <div>
+            <h1>Hello，React</h1>
+            <h2>It is {props.date.toLocaleTimeString()} now.</h2>
+        </div>
+    );
+}
+
+class HelloClock extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {date: new Date()};
+    }
+
+    componentDidMount(){
+        this.TimerID = setInterval(
+            ()=> this.tick(),
+            1000
+        );
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.TimerID);
+    }
+
+    tick(){
+        this.setState({
+            date: new Date()
+        });
+    }
+
+    render(){
+        return (
+            <div>
+                <h1>Hello State Clock</h1>
+                <h3>It is default {this.state.date.toLocaleTimeString()}</h3>
+            </div>
+        );
+    }
+}
+
+const newElement = <HelloClock />
+    ReactDOM.render(
+        newElement,
+        document.getElementById("new-clock")
+    );
+</script>
+
+</body>
+</html>
