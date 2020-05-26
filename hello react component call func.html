@@ -11,59 +11,119 @@
 
 <body>
     <h3>react 父组件和子组件 传值</h3>
+    <p>参考示例https://www.cnblogs.com/Scar007/p/8060334.html</p>
     <div id="example"></div>
     <script type="text/babel">
 
-        class Lists extends React.Component {
+        class ComponentInput extends React.Component {
             constructor(props) {
                 super(props);
+                const comment = { username: "", content: "" };
+                this.state = comment;
+            }
+
+            handleUsernameChange = (event) => {
+                const commentUsername = { username: event.target.value };
+                this.setState(commentUsername);
+            }
+
+            handleContentChange = (event) => {
+                const commentContent = { content: event.target.value };
+                this.setState(commentContent);
+            }
+
+            handleSubmit = () => {
+                if (this.props.onSubmit) {
+                    const { username, content } = this.state;
+                    this.props.onSubmit({ username, content });
+                }
+                const commentInit = { username: "", content: "" };
+                this.setState(commentInit);
             }
 
             render() {
-                const numbers = [1, 2, 3, 4, 5];
-                const listItems = numbers.map((number) =>
-                    <li>{number}</li>
-                );
                 return (
                     <div>
-                        <ul>
-                            {listItems}
-                        </ul>
+                        <div>
+                            <span>UserName:</span>
+                            <input type="text" value={this.state.username} onChange={this.handleUsernameChange} />
+                        </div>
+                        <br />
+                        <div>
+                            <span>Content:</span>
+                            <textarea type="text" value={this.state.content} onChange={this.handleContentChange} />
+                        </div>
+                        <br />
+                        <button onClick={this.handleSubmit}>Submit</button>
+                        <hr />
                     </div>
                 );
             }
 
         }
 
+        class Comment extends React.Component {
+            render() {
+                console.log(this.props)
+                return (
+                    <div>
+                        <div>
+                            <span>{this.props.dataid + 1} - {this._reactInternalFiber.key} 用户:{this.props.comment.username}</span>
+                        </div>
+                        <p>评论内容：{this.props.comment.content}</p>
+                    </div>
+                )
+            }
+        }
 
-        class ListsKey extends React.Component {
+        class ComponentComments extends React.Component {
             constructor(props) {
                 super(props);
             }
 
             render() {
-                const numbers = [11, 22, 33, 44, 55];
-                const listItems = numbers.map((number, index) =>
-                    <li key={index}>{number}</li>
-                );
                 return (
                     <div>
-                        <ul>
-                            {listItems}
-                        </ul>
+                        {this.props.comments.map((comment, index) => {
+                            return <Comment comment={comment} key={index} dataid={index}/>
+                        })}
                     </div>
                 );
             }
+        }
+        //通过组件类的 defaultProps 属性为 props 设置默认值
+        ComponentComments.defaultProps = {
+                comments: []
+        };
 
+        class ComponentApp extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    comments: []
+                };
+            }
+
+            handleSubmitComment = (comment) => {
+                this.state.comments.push(comment);
+                const commentList = { comments: this.state.comments };
+                this.setState(commentList);
+            }
+
+            render() {
+                return (
+                    <div>
+                        <ComponentInput onSubmit={this.handleSubmitComment} />
+                        <hr/>
+                        <ComponentComments comments={this.state.comments} />
+                    </div>
+                );
+            }
         }
 
-        const numbers3 = [111, 222, 333, 444, 555];
         ReactDOM.render(
             <div>
-                <Lists />
-                <ListsKey />
-                <hr />
-                <ListsProps numbers={numbers3} />
+                <ComponentApp />
             </div>,
             document.getElementById('example')
         );
